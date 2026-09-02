@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#120d0a">
+<title>OOAKOSIMO PANTRY ALCHEMIST • ISSUE 001</title>
+<link rel="icon" type="image/png" href="./icon.png">
+<link rel="apple-touch-icon" href="./icon.png">
+<script src="p5.min.js"></script>
+<style>
+:root{--paper:#f1e6cf;--paper2:#fff8e8;--ink:#15110e;--rust:#b94122;--ginger:#e88b2f;--gold:#d1a247;--pink:#d96b78;--muted:#74685b}
+*{box-sizing:border-box}html{background:#0e0b09}body{margin:0;background:#0e0b09;color:var(--ink);font-family:Georgia,"Times New Roman",serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.16;mix-blend-mode:multiply;background-image:repeating-radial-gradient(circle at 0 0,transparent 0 1px,rgba(0,0,0,.23) 1px 2px),repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);background-size:4px 4px,100% 4px}
+.site{width:min(980px,calc(100% - 22px));margin:22px auto 60px;background:var(--paper);border:2px solid #000;box-shadow:0 0 0 8px #24160f,0 0 0 11px #000,18px 22px 0 rgba(185,65,34,.45);overflow:hidden}
+.masthead{min-height:680px;position:relative;display:grid;place-items:center;padding:70px 22px 48px;overflow:hidden;background:#120d0a;color:var(--paper2);border-bottom:8px solid #000;isolation:isolate}
+#gingerField{position:absolute;inset:0;z-index:-3}#gingerField canvas{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+.masthead:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 50% 46%,transparent 0 18%,rgba(0,0,0,.15) 44%,rgba(0,0,0,.82) 100%),linear-gradient(120deg,rgba(217,107,120,.18),transparent 45% 60%,rgba(232,139,47,.18))}
+.issue{position:absolute;top:18px;left:18px;font:800 12px/1.1 "Courier New",monospace;letter-spacing:.14em;text-transform:uppercase;padding:9px 10px 7px;background:var(--rust);color:#fff5e9;border:2px solid #000;box-shadow:4px 4px 0 #000;transform:rotate(-2deg)}
+.stamp{position:absolute;right:22px;top:22px;width:92px;height:92px;border:3px solid var(--ginger);border-radius:50%;display:grid;place-items:center;color:var(--ginger);font:900 11px/1.1 "Courier New",monospace;text-align:center;letter-spacing:.08em;transform:rotate(12deg)}
+.hero{text-align:center;max-width:850px}.kicker{display:inline-block;color:var(--ginger);background:#000;padding:7px 11px;border:1px solid var(--ginger);font:700 12px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.17em;margin-bottom:20px;transform:rotate(-1deg)}
+h1{margin:0;font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;font-size:clamp(62px,11vw,132px);line-height:.78;letter-spacing:-.055em;text-transform:uppercase;text-shadow:3px 0 0 var(--rust),-3px 0 0 var(--pink),0 5px 0 #000}
+h1 .thin{display:block;font-family:"Courier New",monospace;font-weight:900;font-size:.25em;line-height:1.2;letter-spacing:.18em;margin:18px 0 5px;color:var(--gold)}
+.glitch{animation:microGlitch 7s infinite steps(1)}@keyframes microGlitch{0%,92%,100%{transform:none}93%{transform:translate(3px,-1px) skewX(-3deg)}94%{transform:translate(-4px,2px);clip-path:inset(38% 0 28% 0)}95%{transform:none;clip-path:none}}
+.recipe-title{margin:34px auto 0;max-width:760px;font:900 clamp(22px,4.1vw,44px)/1.04 "Courier New",monospace;text-transform:uppercase;letter-spacing:-.04em;text-shadow:2px 2px 0 #000}
+.hero-note{margin:24px auto 0;width:max-content;max-width:90%;padding:8px 11px;background:var(--paper2);color:#1a120d;border:2px solid #000;box-shadow:6px 6px 0 var(--rust);font:700 12px/1.35 "Courier New",monospace;transform:rotate(1deg)}
+.marquee{overflow:hidden;border-top:2px solid #000;border-bottom:2px solid #000;background:var(--ginger);color:#130d09;padding:8px 0 7px;font:900 12px/1 "Courier New",monospace;text-transform:uppercase}.marquee span{display:block;width:max-content;animation:marq 19s linear infinite}@keyframes marq{to{transform:translateX(-50%)}}
+.section{position:relative;padding:58px clamp(22px,6vw,68px);border-bottom:3px solid #000}.section:nth-child(even){background:linear-gradient(180deg,rgba(255,255,255,.25),transparent),var(--paper2)}
+.section-head{display:flex;align-items:flex-end;gap:14px;margin-bottom:25px}.num{font:900 12px/1 "Courier New",monospace;padding:6px 7px;background:#000;color:var(--ginger);transform:rotate(-3deg)}
+h2{margin:0;font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;font-size:clamp(36px,6vw,66px);line-height:.9;text-transform:uppercase;letter-spacing:-.035em}
+.panel{position:relative;margin:22px 0;padding:24px;border:2px solid #000;background:#fffaf0;box-shadow:8px 8px 0 #000;transform:rotate(var(--rot,0deg))}.panel:before{content:"";position:absolute;width:74px;height:22px;top:-13px;left:calc(50% - 37px);background:rgba(203,173,112,.72);border-left:1px solid rgba(0,0,0,.15);border-right:1px solid rgba(0,0,0,.15);transform:rotate(-2deg)}.panel:nth-child(odd){--rot:-.3deg}.panel:nth-child(even){--rot:.35deg}
+.flavor{font-size:clamp(18px,2.2vw,23px);line-height:1.6;font-style:italic;margin:0}.pull{margin:28px 0 0;font:900 clamp(22px,4vw,38px)/1.08 "Courier New",monospace;text-transform:uppercase;color:var(--rust)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.label{display:inline-block;margin-bottom:10px;padding:5px 7px;background:var(--ginger);color:#150e09;border:2px solid #000;font:900 11px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.08em}.ingredients{font:700 16px/1.65 "Courier New",monospace}
+.steps{counter-reset:step;display:grid;gap:10px;margin:0;padding:0;list-style:none}.steps li{counter-increment:step;display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;font-size:18px;line-height:1.45}.steps li:before{content:counter(step,decimal-leading-zero);width:40px;height:40px;display:grid;place-items:center;background:#000;color:var(--ginger);font:900 13px/1 "Courier New",monospace;transform:rotate(-3deg)}
+.collab{border-top:2px dashed #000;padding:18px 0;display:grid;grid-template-columns:minmax(110px,180px) 1fr;gap:16px}.collab strong{font:900 18px/1.1 "Courier New",monospace;text-transform:uppercase;color:var(--rust)}
+footer{padding:54px 24px 60px;text-align:center;background:#17100c;color:var(--paper2)}footer:before{content:"KITCHEN ARTILLERY • PANTRY ALCHEMY • USE WHAT EXISTS •";display:block;white-space:nowrap;font:900 clamp(22px,5vw,58px)/1 Impact,sans-serif;color:var(--rust);transform:translateX(-4%) rotate(-1deg);margin-bottom:30px}footer p{max-width:680px;margin:0 auto;font:700 14px/1.6 "Courier New",monospace}
+.jolt{animation:jolt .16s steps(2) 1}@keyframes jolt{0%{transform:translate(0)}30%{transform:translate(-3px,1px) skewX(-1deg)}70%{transform:translate(4px,-1px)}100%{transform:translate(0)}}
+@media(max-width:700px){.site{width:calc(100% - 12px);margin:8px auto 32px;box-shadow:0 0 0 4px #24160f,0 0 0 6px #000,8px 10px 0 rgba(185,65,34,.45)}.masthead{min-height:620px}.stamp{width:68px;height:68px;font-size:8px}.grid{grid-template-columns:1fr}.panel{padding:19px;box-shadow:5px 5px 0 #000}.collab{grid-template-columns:1fr;gap:5px}.section{padding-top:44px;padding-bottom:44px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="site">
+<header class="masthead">
+<div id="gingerField" aria-hidden="true"></div>
+<div class="issue">Issue 001<br>Pantry Signal</div>
+<div class="stamp">REBEL<br>KITCHEN<br>APPROVED</div>
+<div class="hero">
+<div class="kicker">OOAKOSIMO BROADCASTS FROM THE CUPBOARD</div>
+<h1 class="glitch">PANTRY<span class="thin">OOAKOSIMO</span>ALCHEMIST</h1>
+<div class="recipe-title">Ginger · Clove · Cinnamon<br>Chamomile · Black Sesame<br>Oat Biscuits</div>
+<div class="hero-note">SMALL BATCH / HIGH AROMA / NO SUPERMARKET FANTASY REQUIRED</div>
+</div>
+</header>
+
+<div class="marquee"><span>GINGER FIELD ACTIVE • CLOVES IN THE SIGNAL • OATS IN FORMATION • CHAMOMILE WHISPER CHANNEL OPEN • BLACK SESAME STATIC • GINGER FIELD ACTIVE • CLOVES IN THE SIGNAL • OATS IN FORMATION • CHAMOMILE WHISPER CHANNEL OPEN • BLACK SESAME STATIC • </span></div>
+
+<section class="section">
+<div class="section-head"><span class="num">01</span><h2>How Cloves Found Me</h2></div>
+<div class="panel"><p class="flavor">Years ago at the first Southeast Asia e-gaming event, I met Ibnu, an Indonesian official. In the smoking area, he handed me a pack of Dunhill cigarettes laced with cloves. “Only in Indonesia,” he said with a big smile. That warm, sweet-spicy aromatic hit stayed with me. Later I discovered how beautifully cloves dance with ginger, cinnamon, and even fresh herbs like mint, tarragon, or dill. This cookie is my little tribute to that memory.</p></div>
+<p class="pull">Memory enters through the nose first.</p>
+</section>
+
+<section class="section">
+<div class="section-head"><span class="num">02</span><h2>The Flavor Journey</h2></div>
+<div class="panel"><p class="flavor">First bite: crisp toasted oat crunch. Then warm buttery softness. Bright ginger zing wakes everything up, followed by the deep sweet-woody embrace of cinnamon and cloves. Roasted black sesame seeds pop with nutty richness while soft chamomile whispers gentle honey-floral notes. Wheat germ adds quiet nourishing earthiness.</p></div>
+<p class="pull">A comforting aromatic hug from the pantry — but slightly feral.</p>
+</section>
+
+<section class="section">
+<div class="section-head"><span class="num">03</span><h2>The Recipe</h2></div>
+<div class="grid">
+<div class="panel"><span class="label">Bite-Sized Batch</span><div class="ingredients">1 cup rolled oats<br>½ cup flour<br>¼ cup wheat germ<br>2 tbsp cassava starch<br>4–5 tbsp real butter<br>3–4 tbsp sugar or honey<br>1–2 tbsp fresh ginger<br>½ tsp cloves<br>½–¾ tsp cinnamon<br>1–2 tbsp chamomile flowers<br>roasted black sesame seeds<br>pinch of salt</div></div>
+<div class="panel"><span class="label">Procedure / Do Not Panic</span><ol class="steps"><li>Cream butter, sugar and ginger.</li><li>Mix dry ingredients and chamomile.</li><li>Combine into a soft dough.</li><li>Shape into roughly 1-inch bites.</li><li>Bake at 175°C for 10–12 minutes.</li><li>Cool. Wrap individually in wax paper if you feel ceremonial.</li></ol></div>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head"><span class="num">04</span><h2>The Collaborators</h2></div>
+<div class="panel">
+<div class="collab"><strong>Ginger</strong><span>Zesty heat, brightness, nose-tingle, wake-up call.</span></div>
+<div class="collab"><strong>Cinnamon + Clove</strong><span>Sweet woody depth. The smell of warmth arriving before the food does.</span></div>
+<div class="collab"><strong>Chamomile</strong><span>Soft honey-floral quiet underneath all the shouting.</span></div>
+<div class="collab"><strong>Black Sesame</strong><span>Roasted nutty punctuation. Tiny dark satellites with crunch.</span></div>
+<div class="collab"><strong>Wheat Germ + Oats</strong><span>The sturdy pantry floor everything else gets to dance on.</span></div>
+</div>
+</section>
+
+<footer><p>A small celebration of what’s still available.<br>Made with love in Amadeo • limited batches from the Kitchen Artillery.<br><br><strong>OOAKOSIMO PANTRY ALCHEMIST / ISSUE 001</strong></p></footer>
+</div>
+
+<script>
+let gingerParticles=[],t=0,pulse=0;
+function setup(){
+  const host=document.getElementById('gingerField');
+  const c=createCanvas(host.offsetWidth,host.offsetHeight);c.parent('gingerField');
+  pixelDensity(Math.min(window.devicePixelRatio||1,2));
+  for(let i=0;i<180;i++) gingerParticles.push(new GingerParticle());
+}
+function draw(){
+  clear();background(15,10,8,34);t+=.01;pulse=sin(t*2)*.12;if(frameCount%180===0)pulse=1.5;
+  push();translate(width/2,height/2);blendMode(ADD);
+  for(const p of gingerParticles){p.update(t,pulse);p.show()}
+  blendMode(BLEND);pop();
+}
+class GingerParticle{
+  constructor(){this.angle=random(TWO_PI);this.baseRadius=random(36,Math.min(width,height)*.5);this.radius=this.baseRadius;this.size=random(1.5,5.5);this.offset=random(1000);this.speed=random(.45,1.6);this.squash=random(.72,1.24);this.alpha=random(45,155)}
+  update(tt,pp){this.angle+=.0015*this.speed;const wobble=sin(tt*1.7+this.offset)*11;const drift=(noise(this.offset,tt*.12)-.5)*26;this.radius=this.baseRadius+wobble+drift+pp*18}
+  show(){const x=cos(this.angle)*this.radius,y=sin(this.angle)*this.radius*this.squash;const heat=map(this.radius,36,Math.max(width,height)*.5,255,95,true);noStroke();fill(255,heat*.42,45,this.alpha);ellipse(x,y,this.size+pulse*2.2);if(this.size>4.2){fill(255,185,70,this.alpha*.28);ellipse(x,y,this.size*3.2+pulse*4)}}
+}
+function windowResized(){const host=document.getElementById('gingerField');resizeCanvas(host.offsetWidth,host.offsetHeight)}
+const glitchTargets=[...document.querySelectorAll('h2,.panel,.recipe-title')];
+setInterval(()=>{if(document.hidden)return;const el=glitchTargets[Math.floor(Math.random()*glitchTargets.length)];el.classList.add('jolt');setTimeout(()=>el.classList.remove('jolt'),180)},3200);
+</script>
+</body>
+</html>
