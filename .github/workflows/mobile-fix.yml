@@ -1,0 +1,55 @@
+name: One-shot mobile layout fix
+
+on:
+  push:
+    paths:
+      - '.github/workflows/mobile-fix.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fix-mobile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch mobile hero CSS
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('index.html')
+          text = path.read_text(encoding='utf-8')
+
+          old = '''@media(max-width:700px){.site{width:calc(100% - 12px);margin:8px auto 32px;box-shadow:0 0 0 4px #24160f,0 0 0 6px #000,8px 10px 0 rgba(185,65,34,.45)}.masthead{min-height:620px}.stamp{width:68px;height:68px;font-size:8px}.grid{grid-template-columns:1fr}.panel{padding:19px;box-shadow:5px 5px 0 #000}.collab{grid-template-columns:1fr;gap:5px}.section{padding-top:44px;padding-bottom:44px}}'''
+
+          new = '''@media(max-width:700px){
+            .site{width:calc(100% - 12px);margin:8px auto 32px;box-shadow:0 0 0 4px #24160f,0 0 0 6px #000,8px 10px 0 rgba(185,65,34,.45)}
+            .masthead{min-height:620px;padding-left:14px;padding-right:14px}
+            .hero{width:100%;max-width:100%;min-width:0}
+            .kicker{max-width:96%;white-space:normal;line-height:1.35;overflow-wrap:anywhere}
+            h1{font-size:clamp(48px,15vw,78px);line-height:.82;letter-spacing:-.045em;max-width:100%;overflow-wrap:anywhere}
+            h1 .thin{font-size:.27em;letter-spacing:.12em}
+            .recipe-title{font-size:clamp(18px,6vw,28px);line-height:1.08;max-width:100%;padding-inline:4px;overflow-wrap:anywhere}
+            .hero-note{width:auto;max-width:96%;line-height:1.45;overflow-wrap:anywhere}
+            .stamp{width:68px;height:68px;font-size:8px}
+            .grid{grid-template-columns:1fr}
+            .panel{padding:19px;box-shadow:5px 5px 0 #000}
+            .collab{grid-template-columns:1fr;gap:5px}
+            .section{padding-top:44px;padding-bottom:44px}
+          }'''
+
+          if old not in text:
+              raise SystemExit('Expected mobile CSS block was not found; refusing to rewrite index.html')
+
+          path.write_text(text.replace(old, new, 1), encoding='utf-8')
+
+      - name: Commit mobile fix
+        run: |
+          git config user.name "ooakosimo-bot"
+          git config user.email "62946727+ooakosimo@users.noreply.github.com"
+          git add index.html
+          git commit -m "Fix mobile hero clipping"
+          git push
