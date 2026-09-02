@@ -73,7 +73,21 @@ h2{margin:0;font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif;f
 .collab{border-top:2px dashed #000;padding:18px 0;display:grid;grid-template-columns:minmax(110px,180px) 1fr;gap:16px}.collab strong{font:900 18px/1.1 "Courier New",monospace;text-transform:uppercase;color:var(--rust)}
 footer{padding:54px 24px 60px;text-align:center;background:#17100c;color:var(--paper2)}footer:before{content:"KITCHEN ARTILLERY • PANTRY ALCHEMY • USE WHAT EXISTS •";display:block;white-space:nowrap;font:900 clamp(22px,5vw,58px)/1 Impact,sans-serif;color:var(--rust);transform:translateX(-4%) rotate(-1deg);margin-bottom:30px}footer p{max-width:680px;margin:0 auto;font:700 14px/1.6 "Courier New",monospace}
 .jolt{animation:jolt .16s steps(2) 1}@keyframes jolt{0%{transform:translate(0)}30%{transform:translate(-3px,1px) skewX(-1deg)}70%{transform:translate(4px,-1px)}100%{transform:translate(0)}}
-@media(max-width:700px){.site{width:calc(100% - 12px);margin:8px auto 32px;box-shadow:0 0 0 4px #24160f,0 0 0 6px #000,8px 10px 0 rgba(185,65,34,.45)}.masthead{min-height:620px}.stamp{width:68px;height:68px;font-size:8px}.grid{grid-template-columns:1fr}.panel{padding:19px;box-shadow:5px 5px 0 #000}.collab{grid-template-columns:1fr;gap:5px}.section{padding-top:44px;padding-bottom:44px}}
+@media(max-width:700px){
+  .site{width:calc(100% - 12px);margin:8px auto 32px;box-shadow:0 0 0 4px #24160f,0 0 0 6px #000,8px 10px 0 rgba(185,65,34,.45)}
+  .masthead{min-height:620px;padding-left:14px;padding-right:14px}
+  .hero{width:100%;max-width:100%;min-width:0}
+  .kicker{max-width:96%;white-space:normal;line-height:1.35;overflow-wrap:anywhere}
+  h1{font-size:clamp(48px,15vw,78px);line-height:.82;letter-spacing:-.045em;max-width:100%;overflow-wrap:anywhere}
+  h1 .thin{font-size:.27em;letter-spacing:.12em}
+  .recipe-title{font-size:clamp(18px,6vw,28px);line-height:1.08;max-width:100%;padding-inline:4px;overflow-wrap:anywhere}
+  .hero-note{width:auto;max-width:96%;line-height:1.45;overflow-wrap:anywhere}
+  .stamp{width:68px;height:68px;font-size:8px}
+  .grid{grid-template-columns:1fr}
+  .panel{padding:19px;box-shadow:5px 5px 0 #000}
+  .collab{grid-template-columns:1fr;gap:5px}
+  .section{padding-top:44px;padding-bottom:44px}
+}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important}}
 </style>
 </head>
